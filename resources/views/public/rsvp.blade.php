@@ -30,7 +30,7 @@
             if (this.companions.length < {{ $event->max_companions }}) {
                 this.companions.push('');
             } else {
-                alert('Limite máximo de {{ $event->max_companions }} acompanhantes atingido.');
+                window.pdsAlert('Limite máximo de {{ $event->max_companions }} acompanhantes atingido.', 'Limite Atingido', 'warning');
             }
         },
         removeCompanion(index) {
@@ -79,12 +79,12 @@
 
         async submitRsvp() {
             if (!this.name || this.name.trim().length < 3) {
-                alert('Por favor, informe seu nome completo.');
+                window.pdsAlert('Por favor, informe seu nome completo para confirmar sua presença.', 'Nome Obrigatório', 'info');
                 return;
             }
 
             if (this.isExpired) {
-                alert('Desculpe, o prazo de confirmação para este evento já foi encerrado.');
+                window.pdsAlert('Desculpe, o prazo de confirmação para este evento já foi encerrado.', 'Prazo Encerrado', 'warning');
                 return;
             }
 
@@ -114,11 +114,11 @@
                         window.triggerConfetti();
                     }
                 } else {
-                    alert(data.message || 'Erro ao confirmar presença. Tente novamente.');
+                    window.pdsAlert(data.message || 'Erro ao confirmar presença. Tente novamente.', 'Aviso', 'warning');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Erro de conexão. Verifique sua internet.');
+                window.pdsAlert('Erro de conexão ao servidor. Verifique sua conexão com a internet.', 'Erro de Conexão', 'warning');
             } finally {
                 this.submitting = false;
             }

@@ -128,7 +128,7 @@
                                             <span>Abrir convite público</span>
                                         </a>
 
-                                        <button type="button" @click="navigator.clipboard.writeText('{{ $event->public_url }}'); alert('Link copiado com sucesso!'); open = false;" class="w-full text-left flex items-center gap-2 px-4 py-2 text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-400">
+                                        <button type="button" @click="navigator.clipboard.writeText('{{ $event->public_url }}'); window.showPdsModal({ title: 'Link Copiado!', message: 'O link do convite foi copiado com sucesso!', type: 'copy' }); open = false;" class="w-full text-left flex items-center gap-2 px-4 py-2 text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-400">
                                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
                                             <span>Copiar link</span>
                                         </button>
@@ -147,7 +147,7 @@
                                             <span>Editar dados</span>
                                         </a>
 
-                                        <form method="POST" action="{{ route('events.destroy', $event) }}" onsubmit="return confirm('Tem certeza que deseja excluir este evento? Todos os convidados serão removidos permanentemente.');">
+                                        <form method="POST" action="{{ route('events.destroy', $event) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja excluir este evento? Todos os convidados serão removidos permanentemente.', () => $el.submit(), 'Excluir Evento', 'Sim, Excluir')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="w-full text-left flex items-center gap-2 px-4 py-2 text-rose-400 hover:bg-rose-500/10">

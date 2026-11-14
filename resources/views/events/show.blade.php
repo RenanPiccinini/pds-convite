@@ -8,7 +8,12 @@
         newCompanions: [''],
         copyLink(url) {
             navigator.clipboard.writeText(url);
-            alert('Link do convite copiado com sucesso! Agora você pode colar no WhatsApp.');
+            window.showPdsModal({
+                title: 'Link Copiado!',
+                message: 'O link do convite foi copiado para a área de transferência. Agora você já pode colar diretamente no WhatsApp para seus convidados!',
+                type: 'copy',
+                confirmText: 'Entendido'
+            });
         },
         openEditGuest(guest) {
             this.selectedGuest = JSON.parse(JSON.stringify(guest));
@@ -206,7 +211,7 @@
                                             <span>Editar</span>
                                         </button>
 
-                                        <form method="POST" action="{{ route('guests.destroy', $guest) }}" onsubmit="return confirm('Excluir este convidado?');">
+                                        <form method="POST" action="{{ route('guests.destroy', $guest) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja remover este convidado da lista?', () => $el.submit(), 'Remover Convidado', 'Sim, Remover')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-rose-400 hover:bg-rose-500/10">
@@ -279,7 +284,7 @@
                                         <span>Editar</span>
                                     </button>
 
-                                    <form method="POST" action="{{ route('guests.destroy', $guest) }}" onsubmit="return confirm('Excluir este convidado?');">
+                                    <form method="POST" action="{{ route('guests.destroy', $guest) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja remover este convidado da lista?', () => $el.submit(), 'Remover Convidado', 'Sim, Remover')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-rose-400 hover:bg-rose-500/10">
@@ -450,7 +455,7 @@
                     <template x-for="comp in selectedGuest.companions" :key="comp.id">
                         <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800">
                             <span class="text-xs font-semibold text-white" x-text="comp.name"></span>
-                            <form :action="'/companions/' + comp.id" method="POST" onsubmit="return confirm('Remover este acompanhante?')">
+                            <form :action="'/companions/' + comp.id" method="POST" @submit.prevent="window.pdsConfirm('Remover este acompanhante?', () => $el.submit(), 'Remover Acompanhante', 'Sim, Remover')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-xs text-rose-400 hover:text-rose-300 p-1">Excluir</button>
@@ -499,7 +504,7 @@
                             <span>Abrir e Enviar no WhatsApp</span>
                         </a>
 
-                        <button type="button" @click="navigator.clipboard.writeText(`{{ addslashes($event->whats_app_share_text) }}`); alert('Mensagem copiada para a área de transferência!');" class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs text-center border border-slate-700">
+                        <button type="button" @click="navigator.clipboard.writeText(`{{ addslashes($event->whats_app_share_text) }}`); window.showPdsModal({ title: 'Mensagem Copiada!', message: 'O texto do convite foi copiado para a área de transferência com sucesso!', type: 'copy' });" class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs text-center border border-slate-700">
                             Copiar Mensagem
                         </button>
                     </div>
