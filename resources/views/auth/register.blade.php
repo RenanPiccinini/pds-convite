@@ -18,7 +18,7 @@
             </label>
             <div class="relative rounded-2xl group">
                 <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Ex: Roberto Silva"
-                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 text-sm transition-all shadow-inner" />
+                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 text-base sm:text-sm transition-all shadow-inner" />
             </div>
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
@@ -30,7 +30,7 @@
             </label>
             <div class="relative rounded-2xl group">
                 <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="seu@email.com"
-                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 text-sm transition-all shadow-inner" />
+                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 text-base sm:text-sm transition-all shadow-inner" />
             </div>
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
@@ -42,7 +42,7 @@
             </label>
             <div class="relative rounded-2xl group">
                 <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Mínimo 8 caracteres"
-                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400 text-sm transition-all shadow-inner" />
+                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400 text-base sm:text-sm transition-all shadow-inner" />
             </div>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -54,7 +54,7 @@
             </label>
             <div class="relative rounded-2xl group">
                 <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Repita a senha"
-                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400 text-sm transition-all shadow-inner" />
+                    class="block w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400 text-base sm:text-sm transition-all shadow-inner" />
             </div>
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>

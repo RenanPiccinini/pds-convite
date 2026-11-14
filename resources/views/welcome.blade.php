@@ -29,28 +29,28 @@
     <div class="relative z-10 flex flex-col min-h-screen">
         <!-- Navigation Bar -->
         <header class="w-full border-b border-slate-800/80 bg-[#080d22]/80 backdrop-blur-xl sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Logo" class="h-12 w-12 object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.7)] group-hover:scale-105 transition-transform" />
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3 group shrink-0">
+                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Logo" class="h-9 w-9 sm:h-12 sm:w-12 object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.7)] group-hover:scale-105 transition-transform" />
                     <div class="flex flex-col">
-                        <span class="text-xl font-black text-white font-display tracking-tight">
+                        <span class="text-base sm:text-xl font-black text-white font-display tracking-tight">
                             PDS <span class="text-cyan-400">CONVITE</span>
                         </span>
-                        <span class="text-[9px] uppercase tracking-widest text-slate-400 font-mono">Piccinini Digital Solutions</span>
+                        <span class="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-mono hidden xs:inline">Piccinini Digital Solutions</span>
                     </div>
                 </a>
 
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 sm:gap-4">
                     @auth
-                        <a href="{{ route('events.index') }}" class="btn-pds-primary px-5 py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
+                        <a href="{{ route('events.index') }}" class="btn-pds-primary px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
                             Acessar Painel
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors">
+                        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors px-2 py-1">
                             Entrar
                         </a>
-                        <a href="{{ route('register') }}" class="btn-pds-primary px-5 py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
-                            Criar Conta Gratuita
+                        <a href="{{ route('register') }}" class="btn-pds-primary px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
+                            <span>Criar Conta<span class="hidden sm:inline"> Gratuita</span></span>
                         </a>
                     @endauth
                 </div>
@@ -59,57 +59,59 @@
 
         <!-- Hero Section with 3D Showcase -->
         <main class="flex-1">
-            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 text-center">
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-16 sm:pb-24 text-center overflow-hidden">
                 <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)]">
-                    <span class="relative flex h-2 w-2">
+                <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[11px] sm:text-xs font-semibold mb-6 sm:mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)] max-w-full">
+                    <span class="relative flex h-2 w-2 shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                     </span>
-                    <span>Piccinini Digital Solutions • Tecnologia de Alta Performance</span>
+                    <span class="truncate">Piccinini Digital Solutions • Tecnologia de Alta Performance</span>
                 </div>
 
                 <!-- Main Title -->
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight font-display max-w-5xl mx-auto leading-tight">
+                <h1 class="text-3xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight font-display max-w-5xl mx-auto leading-tight">
                     Confirmação de Presença
                     <span class="block text-gradient-pds">Elegante, Rápida & Sem Limites</span>
                 </h1>
 
-                <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                <p class="mt-4 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
                     Crie seus eventos, compartilhe o link diretamente no WhatsApp e receba a confirmação dos seus convidados em menos de 10 segundos, com suporte a acompanhantes.
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
                     @auth
-                        <a href="{{ route('events.index') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-4 rounded-full text-white font-bold text-base flex items-center justify-center gap-2 shadow-2xl">
+                        <a href="{{ route('events.index') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl">
                             <span>Ir para Meus Eventos</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                     @else
-                        <a href="{{ route('register') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-4 rounded-full text-white font-bold text-base flex items-center justify-center gap-2 shadow-2xl">
+                        <a href="{{ route('register') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl">
                             <span>Começar Agora (Grátis)</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
-                        <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-base transition-colors">
+                        <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm sm:text-base transition-colors flex items-center justify-center">
                             Acessar Gerenciador
                         </a>
                     @endauth
                 </div>
 
                 <!-- 3D Perspective Card Showcase -->
-                <div class="mt-20 max-w-4xl mx-auto perspective-2000">
-                    <div class="glass-panel p-2 sm:p-4 rounded-[2.5rem] border border-cyan-500/30 shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_50px_rgba(0,240,255,0.2)] transform-style-3d transition-transform duration-500 hover:scale-[1.01]" data-tilt>
-                        <div class="rounded-3xl bg-[#090e24] p-6 sm:p-10 text-left border border-slate-800 space-y-6">
+                <div class="mt-12 sm:mt-20 max-w-4xl mx-auto perspective-2000">
+                    <div class="glass-panel p-2 sm:p-4 rounded-2xl sm:rounded-[2.5rem] border border-cyan-500/30 shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_50px_rgba(0,240,255,0.2)] transform-style-3d transition-transform duration-500 hover:scale-[1.01]" data-tilt>
+                        <div class="rounded-xl sm:rounded-3xl bg-[#090e24] p-4 sm:p-10 text-left border border-slate-800 space-y-5 sm:space-y-6">
                             <!-- Showcase Top Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-3 w-3 rounded-full bg-rose-500"></div>
-                                    <div class="h-3 w-3 rounded-full bg-amber-500"></div>
-                                    <div class="h-3 w-3 rounded-full bg-emerald-500"></div>
-                                    <span class="text-xs text-slate-400 font-mono ml-2">pdsconvite.online/convite/96c5a861</span>
+                            <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-4 border-b border-slate-800 pb-3 sm:pb-4">
+                                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        <div class="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-rose-500"></div>
+                                        <div class="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-amber-500"></div>
+                                        <div class="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-emerald-500"></div>
+                                    </div>
+                                    <span class="text-[11px] sm:text-xs text-slate-400 font-mono truncate max-w-[150px] sm:max-w-none">pdsconvite.online/convite/96c5a861</span>
                                 </div>
-                                <div class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold">
+                                <div class="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-xs font-bold shrink-0">
                                     ♾️ SEM LIMITE DE CONVITES
                                 </div>
                             </div>

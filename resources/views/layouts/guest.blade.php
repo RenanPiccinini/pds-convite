@@ -27,15 +27,15 @@
             <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f29370f_1px,transparent_1px),linear-gradient(to_bottom,#1f29370f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
         </div>
 
-        <div class="relative z-10 min-h-screen flex flex-col justify-center items-center p-4 sm:p-6">
-            <div class="mb-6">
+        <div class="relative z-10 min-h-screen flex flex-col justify-center items-center p-3.5 sm:p-6">
+            <div class="mb-5 sm:mb-6">
                 <a href="{{ route('home') }}" class="group transition-transform duration-300 hover:scale-105 inline-block">
                     <x-application-logo />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md perspective-1000">
-                <div class="glass-panel rounded-3xl p-8 sm:p-10 shadow-2xl border border-cyan-500/20 backdrop-blur-2xl relative transition-all duration-300 hover:border-cyan-500/40 transform-style-3d">
+            <div class="w-full max-w-md perspective-1000">
+                <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-2xl border border-cyan-500/20 backdrop-blur-2xl relative transition-all duration-300 hover:border-cyan-500/40 transform-style-3d">
                     {{ $slot }}
                 </div>
             </div>

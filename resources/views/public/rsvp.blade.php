@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="dark">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Confirme sua presença - {{ $event->title }} | PDS Convite</title>
@@ -145,51 +145,51 @@
             </a>
         </header>
 
-        <!-- Main Invitation RSVP Container (Matches Screenshot 1) -->
-        <main class="w-full max-w-lg mx-auto space-y-6">
+        <!-- Main Invitation RSVP Container (Matches Screenshot 1 - 100% RESPONSIVE) -->
+        <main class="w-full max-w-lg mx-auto space-y-5 sm:space-y-6">
             <!-- Header Titles (Screenshot 1: "Confirme sua presença" + Title) -->
             <div class="text-center space-y-2">
-                <div class="text-sm uppercase tracking-widest text-slate-300 font-serif italic">
+                <div class="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-serif italic">
                     Confirme sua presença
                 </div>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight text-gradient-silver">
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white font-display tracking-tight text-gradient-silver px-2">
                     {{ $event->title }}
                 </h1>
                 <div class="w-16 h-0.5 mx-auto bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
             </div>
 
             <!-- RSVP White/Glass Card (Screenshot 1) -->
-            <div class="bg-white/95 text-slate-800 rounded-[2.5rem] p-6 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6),0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl border border-white/40 transform-style-3d relative" data-tilt>
-                <div class="space-y-6">
+            <div class="bg-white/95 text-slate-800 rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6),0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl border border-white/40 transform-style-3d relative" data-tilt>
+                <div class="space-y-5 sm:space-y-6">
                     <!-- Quando (Screenshot 1) -->
                     <div class="space-y-1">
-                        <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                        <div class="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm">
                             <span class="text-slate-600">📅</span>
                             <span>Quando</span>
                         </div>
-                        <div class="text-slate-800 font-medium text-sm pl-6">
+                        <div class="text-slate-800 font-medium text-xs sm:text-sm pl-5 sm:pl-6">
                             {{ $event->formatted_event_date }}
                         </div>
-                        <div class="text-xs text-amber-700 font-medium flex items-center gap-1 pl-6">
+                        <div class="text-[11px] sm:text-xs text-amber-700 font-medium flex items-center gap-1 pl-5 sm:pl-6">
                             <span>⏱ Confirmar até: {{ $event->formatted_rsvp_deadline }}</span>
                         </div>
                     </div>
 
                     <!-- Onde (Screenshot 1) -->
                     <div class="space-y-1">
-                        <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                        <div class="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm">
                             <span class="text-slate-600">📍</span>
                             <span>Onde</span>
                         </div>
                         @if($event->location_name)
-                            <div class="text-xs font-bold text-slate-700 pl-6">
+                            <div class="text-xs font-bold text-slate-700 pl-5 sm:pl-6">
                                 {{ $event->location_name }}
                             </div>
                         @endif
-                        <div class="text-slate-700 text-xs sm:text-sm leading-relaxed pl-6">
+                        <div class="text-slate-700 text-xs sm:text-sm leading-relaxed pl-5 sm:pl-6">
                             {{ $event->location_address }}
                         </div>
-                        <div class="pl-6 pt-0.5">
+                        <div class="pl-5 sm:pl-6 pt-0.5">
                             <a href="{{ $event->map_url }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 font-semibold underline">
                                 <span>Abrir no mapa</span>
                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -197,33 +197,33 @@
                         </div>
                     </div>
 
-                    <!-- Prazo para confirmar (Countdown Banner - Screenshot 1) -->
-                    <div class="p-3.5 rounded-2xl bg-[#fff9e6] border border-[#fde68a] text-amber-900 flex items-center justify-between shadow-sm">
-                        <div class="text-xs font-semibold flex items-center gap-1.5">
+                    <!-- Prazo para confirmar (Countdown Banner - Screenshot 1 - RESPONSIVE) -->
+                    <div class="p-3 sm:p-3.5 rounded-2xl bg-[#fff9e6] border border-[#fde68a] text-amber-900 flex flex-col sm:flex-row items-center sm:justify-between gap-2.5 sm:gap-2 shadow-sm">
+                        <div class="text-xs font-semibold flex items-center gap-1.5 shrink-0">
                             <span>⏱</span>
                             <span>Prazo para confirmar</span>
                         </div>
 
                         <!-- Countdown digits (Screenshot 1: 12 03 12 33 / dias horas min seg) -->
-                        <div class="flex items-center gap-2 text-center" x-show="!isExpired">
-                            <div>
-                                <span class="font-extrabold text-sm block" x-text="days">12</span>
-                                <span class="text-[9px] uppercase text-amber-700 block">dias</span>
+                        <div class="flex items-center gap-1.5 sm:gap-2 text-center" x-show="!isExpired">
+                            <div class="min-w-[32px] sm:min-w-[38px]">
+                                <span class="font-extrabold text-sm sm:text-base block" x-text="days">12</span>
+                                <span class="text-[8px] sm:text-[9px] uppercase text-amber-700 block">dias</span>
                             </div>
                             <span class="text-xs font-bold text-amber-400">:</span>
-                            <div>
-                                <span class="font-extrabold text-sm block" x-text="hours">03</span>
-                                <span class="text-[9px] uppercase text-amber-700 block">horas</span>
+                            <div class="min-w-[32px] sm:min-w-[38px]">
+                                <span class="font-extrabold text-sm sm:text-base block" x-text="hours">03</span>
+                                <span class="text-[8px] sm:text-[9px] uppercase text-amber-700 block">horas</span>
                             </div>
                             <span class="text-xs font-bold text-amber-400">:</span>
-                            <div>
-                                <span class="font-extrabold text-sm block" x-text="minutes">12</span>
-                                <span class="text-[9px] uppercase text-amber-700 block">min</span>
+                            <div class="min-w-[32px] sm:min-w-[38px]">
+                                <span class="font-extrabold text-sm sm:text-base block" x-text="minutes">12</span>
+                                <span class="text-[8px] sm:text-[9px] uppercase text-amber-700 block">min</span>
                             </div>
                             <span class="text-xs font-bold text-amber-400">:</span>
-                            <div>
-                                <span class="font-extrabold text-sm block text-amber-600" x-text="seconds">33</span>
-                                <span class="text-[9px] uppercase text-amber-700 block">seg</span>
+                            <div class="min-w-[32px] sm:min-w-[38px]">
+                                <span class="font-extrabold text-sm sm:text-base block text-amber-600" x-text="seconds">33</span>
+                                <span class="text-[8px] sm:text-[9px] uppercase text-amber-700 block">seg</span>
                             </div>
                         </div>
 
@@ -240,7 +240,7 @@
                     @endif
 
                     <!-- RSVP Form Fields (Screenshot 1) -->
-                    <div class="space-y-4 pt-2">
+                    <div class="space-y-4 pt-1 sm:pt-2">
                         <!-- Seu nome (Screenshot 1) -->
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1">
@@ -248,7 +248,7 @@
                                 <span class="text-slate-400 text-[10px]" title="Informe seu nome completo">ⓘ</span>
                             </label>
                             <input type="text" x-model="name" placeholder="Nome e sobrenome" :disabled="isExpired"
-                                class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-sm transition-all shadow-inner" />
+                                class="w-full px-4 py-3 rounded-2xl bg-slate-100/90 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-base sm:text-sm transition-all shadow-inner" />
                         </div>
 
                         <!-- Telefone WhatsApp (Opcional) -->
@@ -258,7 +258,7 @@
                                 <span class="text-slate-400 text-[10px] font-normal">(opcional)</span>
                             </label>
                             <input type="text" x-model="phone" placeholder="(00) 00000-0000" :disabled="isExpired"
-                                class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-sm transition-all shadow-inner" />
+                                class="w-full px-4 py-3 rounded-2xl bg-slate-100/90 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-base sm:text-sm transition-all shadow-inner" />
                         </div>
 
                         <!-- Acompanhantes (Screenshot 1: "+ Adicionar") -->
@@ -273,7 +273,7 @@
                                     <template x-for="(companion, index) in companions" :key="index">
                                         <div class="flex items-center gap-2 animate-fadeIn">
                                             <input type="text" x-model="companions[index]" placeholder="Nome completo do acompanhante"
-                                                class="flex-1 px-4 py-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:ring-2 focus:ring-cyan-500 focus:bg-white" />
+                                                class="flex-1 px-3.5 py-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-900 placeholder-slate-400 text-base sm:text-xs focus:ring-2 focus:ring-cyan-500 focus:bg-white" />
                                             <button type="button" @click="removeCompanion(index)" class="p-2 text-slate-400 hover:text-rose-500 rounded-full hover:bg-slate-100" title="Remover">
                                                 ✕
                                             </button>
@@ -291,9 +291,9 @@
                         @endif
 
                         <!-- Submit CTA Button (Screenshot 1: "Confirmar presença") -->
-                        <div class="pt-3">
+                        <div class="pt-2 sm:pt-3">
                             <button type="button" @click="submitRsvp()" :disabled="submitting || isExpired"
-                                class="w-full py-4 px-6 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-xl"
+                                class="w-full py-3.5 sm:py-4 px-6 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-xl"
                                 :class="isExpired ? 'bg-slate-400 cursor-not-allowed' : (name.length >= 3 ? 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 hover:from-cyan-600 hover:to-purple-600 hover:scale-[1.01] active:scale-[0.99] shadow-cyan-500/20' : 'bg-slate-300 text-slate-500 cursor-not-allowed')">
                                 <template x-if="submitting">
                                     <span>Confirmando presença...</span>
