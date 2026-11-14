@@ -23,8 +23,18 @@ Route::get('/welcome', function () {
 Route::redirect('/registrar', '/register')->name('registrar');
 Route::redirect('/cadastrar', '/register')->name('cadastrar');
 Route::redirect('/cadastro', '/register')->name('cadastro');
+Route::redirect('/cadastre-se', '/register')->name('cadastre-se');
+Route::redirect('/cadastre_se', '/register');
+Route::redirect('/cadastrar-se', '/register')->name('cadastrar-se');
+Route::redirect('/cadastrar_se', '/register');
+Route::redirect('/cadastre', '/register')->name('cadastre');
 Route::redirect('/se-cadastrar', '/register')->name('se-cadastrar');
 Route::redirect('/se_cadastrar', '/register');
+Route::redirect('/registre-se', '/register')->name('registre-se');
+Route::redirect('/registre_se', '/register');
+Route::redirect('/registre', '/register')->name('registre');
+Route::redirect('/registrar-se', '/register')->name('registrar-se');
+Route::redirect('/registrar_se', '/register');
 Route::redirect('/entrar', '/login')->name('entrar');
 
 // Public RSVP Routes (screenshot 1 & friendly URLs)

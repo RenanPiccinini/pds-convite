@@ -50,7 +50,7 @@
                             Entrar
                         </a>
                         <a href="{{ route('register') }}" class="btn-pds-primary px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm shadow-md active:scale-95 relative z-30 touch-manipulation">
-                            <span>Registrar<span class="hidden sm:inline">-se Grátis</span></span>
+                            <span>Cadastrar<span class="hidden sm:inline">-se Grátis</span></span>
                         </a>
                     @endauth
                 </div>
@@ -88,7 +88,7 @@
                         </a>
                     @else
                         <a href="{{ route('register') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl relative z-20 touch-manipulation">
-                            <span>Cadastrar Agora (Grátis)</span>
+                            <span>Cadastrar-se Grátis</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                         <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm sm:text-base transition-colors flex items-center justify-center relative z-20 touch-manipulation">

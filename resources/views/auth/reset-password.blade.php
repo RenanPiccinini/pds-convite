@@ -49,11 +49,11 @@
                 Redefinir Senha
             </button>
         </div>
-
-        <div class="pt-1">
-            <a href="{{ route('login') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
-                ← Voltar para o login
-            </a>
-        </div>
     </form>
+
+    <div class="pt-4">
+        <a href="{{ route('login') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
+            ← Voltar para o login
+        </a>
+    </div>
 </x-guest-layout>

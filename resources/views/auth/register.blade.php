@@ -8,6 +8,7 @@
         </p>
     </div>
 
+    <!-- Formulário Exclusivo de Registro -->
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
@@ -65,13 +66,13 @@
                 Cadastrar e Criar Eventos
             </button>
         </div>
-
-        <!-- Secondary Login Button (Mobile Friendly) -->
-        <div class="pt-1">
-            <a href="{{ route('login') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
-                <span>Já possui uma conta?</span>
-                <span class="text-cyan-400 font-bold">Fazer Login</span>
-            </a>
-        </div>
     </form>
+
+    <!-- Fora do Formulário: Botão Direto para o Login -->
+    <div class="pt-4">
+        <a href="{{ route('login') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
+            <span>Já possui uma conta?</span>
+            <span class="text-cyan-400 font-bold">Fazer Login</span>
+        </a>
+    </div>
 </x-guest-layout>

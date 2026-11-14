@@ -44,6 +44,41 @@ class RegistrationTest extends TestCase
         $response->assertRedirect('/register');
     }
 
+    public function test_cadastre_se_alias_redirects_to_register(): void
+    {
+        $response = $this->get('/cadastre-se');
+
+        $response->assertRedirect('/register');
+    }
+
+    public function test_cadastre_alias_redirects_to_register(): void
+    {
+        $response = $this->get('/cadastre');
+
+        $response->assertRedirect('/register');
+    }
+
+    public function test_cadastrar_se_alias_redirects_to_register(): void
+    {
+        $response = $this->get('/cadastrar-se');
+
+        $response->assertRedirect('/register');
+    }
+
+    public function test_registre_se_alias_redirects_to_register(): void
+    {
+        $response = $this->get('/registre-se');
+
+        $response->assertRedirect('/register');
+    }
+
+    public function test_registrar_se_alias_redirects_to_register(): void
+    {
+        $response = $this->get('/registrar-se');
+
+        $response->assertRedirect('/register');
+    }
+
     public function test_new_users_can_register(): void
     {
         $response = $this->post('/register', [

@@ -11,6 +11,7 @@
         </p>
     </div>
 
+    <!-- Formulário Exclusivo de Login (Apenas campos e botão Entrar) -->
     <form method="POST" action="{{ route('login') }}" class="space-y-4 sm:space-y-5">
         @csrf
 
@@ -67,25 +68,25 @@
                 Entrar
             </button>
         </div>
-
-        <!-- Secondary Register Button (Mobile Friendly, Prominent Action) -->
-        <div class="pt-1">
-            <a href="{{ route('register') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
-                <span>Não tem uma conta?</span>
-                <span class="text-cyan-400 font-bold">Cadastrar-se Grátis</span>
-            </a>
-        </div>
-
-        <!-- Help / Support Links -->
-        <div class="pt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-400 text-center">
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="py-1.5 px-1 hover:text-cyan-400 transition-colors touch-manipulation">Recuperar senha</a>
-                <span class="text-slate-600 hidden sm:inline">|</span>
-            @endif
-            <a href="https://wa.me/?text=Olá,%20preciso%20de%20ajuda%20com%20o%20PDS%20Convite" target="_blank" class="py-1.5 px-1 hover:text-cyan-400 transition-colors touch-manipulation flex items-center gap-1.5">
-                <span>💬</span>
-                <span>Suporte no WhatsApp</span>
-            </a>
-        </div>
     </form>
+
+    <!-- Fora do Formulário: Botão Direto para o Cadastro (Impossibilita submit acidental no mobile) -->
+    <div class="pt-4">
+        <a href="{{ route('register') }}" class="w-full min-h-[48px] py-3 px-4 rounded-2xl text-slate-200 hover:text-white font-semibold text-sm bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer touch-manipulation select-none shadow-sm active:scale-[0.98]">
+            <span>Não tem uma conta?</span>
+            <span class="text-cyan-400 font-bold">Cadastrar-se Grátis</span>
+        </a>
+    </div>
+
+    <!-- Help / Support Links -->
+    <div class="pt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-400 text-center">
+        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="py-1.5 px-1 hover:text-cyan-400 transition-colors touch-manipulation">Recuperar senha</a>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+        @endif
+        <a href="https://wa.me/?text=Olá,%20preciso%20de%20ajuda%20com%20o%20PDS%20Convite" target="_blank" class="py-1.5 px-1 hover:text-cyan-400 transition-colors touch-manipulation flex items-center gap-1.5">
+            <span>💬</span>
+            <span>Suporte no WhatsApp</span>
+        </a>
+    </div>
 </x-guest-layout>
