@@ -30,27 +30,27 @@
         <!-- Navigation Bar -->
         <header class="w-full border-b border-slate-800/80 bg-[#080d22]/80 backdrop-blur-xl sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3 group shrink-0">
-                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Logo" class="h-9 w-9 sm:h-12 sm:w-12 object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.7)] group-hover:scale-105 transition-transform" />
+                <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3 group shrink-0 relative z-10 select-none">
+                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Logo" class="h-8 w-8 sm:h-12 sm:w-12 object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.7)] group-hover:scale-105 transition-transform" />
                     <div class="flex flex-col">
-                        <span class="text-base sm:text-xl font-black text-white font-display tracking-tight">
+                        <span class="text-sm sm:text-xl font-black text-white font-display tracking-tight">
                             PDS <span class="text-cyan-400">CONVITE</span>
                         </span>
-                        <span class="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-mono hidden xs:inline">Piccinini Digital Solutions</span>
+                        <span class="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-400 font-mono hidden sm:inline">Piccinini Digital Solutions</span>
                     </div>
                 </a>
 
-                <div class="flex items-center gap-2 sm:gap-4">
+                <div class="flex items-center gap-2 sm:gap-4 shrink-0 relative z-30">
                     @auth
-                        <a href="{{ route('events.index') }}" class="btn-pds-primary px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
+                        <a href="{{ route('events.index') }}" class="btn-pds-primary px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm relative z-30 touch-manipulation">
                             Acessar Painel
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors px-2 py-1">
+                        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors px-2.5 py-1.5 rounded-xl hover:bg-slate-800/40 relative z-30 touch-manipulation">
                             Entrar
                         </a>
-                        <a href="{{ route('register') }}" class="btn-pds-primary px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm">
-                            <span>Criar Conta<span class="hidden sm:inline"> Gratuita</span></span>
+                        <a href="{{ route('register') }}" class="btn-pds-primary px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm shadow-md active:scale-95 relative z-30 touch-manipulation">
+                            <span>Registrar<span class="hidden sm:inline">-se Grátis</span></span>
                         </a>
                     @endauth
                 </div>
@@ -80,19 +80,19 @@
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
+                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto relative z-20">
                     @auth
-                        <a href="{{ route('events.index') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl">
+                        <a href="{{ route('events.index') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl relative z-20 touch-manipulation">
                             <span>Ir para Meus Eventos</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                     @else
-                        <a href="{{ route('register') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl">
-                            <span>Começar Agora (Grátis)</span>
+                        <a href="{{ route('register') }}" class="btn-pds-primary w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl relative z-20 touch-manipulation">
+                            <span>Cadastrar Agora (Grátis)</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
-                        <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm sm:text-base transition-colors flex items-center justify-center">
-                            Acessar Gerenciador
+                        <a href="{{ route('login') }}" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm sm:text-base transition-colors flex items-center justify-center relative z-20 touch-manipulation">
+                            Entrar na Conta
                         </a>
                     @endauth
                 </div>

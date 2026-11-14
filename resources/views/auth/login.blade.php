@@ -92,7 +92,7 @@
 
         <!-- Footer Links (Screenshot 2: Criar uma conta | Recuperar senha | Ajuda) -->
         <div class="pt-4 flex items-center justify-center gap-3 text-xs text-slate-400">
-            <a href="{{ route('register') }}" class="hover:text-cyan-400 transition-colors">Criar uma conta</a>
+            <a href="{{ route('register') }}" class="hover:text-cyan-400 transition-colors">Registrar / Criar conta</a>
             <span class="text-slate-600">|</span>
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="hover:text-cyan-400 transition-colors">Recuperar senha</a>

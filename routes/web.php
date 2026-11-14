@@ -11,6 +11,14 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// Friendly Portuguese Auth Aliases and Redirects
+Route::redirect('/registrar', '/register')->name('registrar');
+Route::redirect('/cadastrar', '/register')->name('cadastrar');
+Route::redirect('/cadastro', '/register')->name('cadastro');
+Route::redirect('/se-cadastrar', '/register')->name('se-cadastrar');
+Route::redirect('/se_cadastrar', '/register');
+Route::redirect('/entrar', '/login')->name('entrar');
+
 // Public RSVP Routes (screenshot 1 & friendly URLs)
 Route::get('/convite/{slug}', [PublicRsvpController::class, 'show'])->name('public.rsvp');
 Route::post('/convite/{slug}/confirmar', [PublicRsvpController::class, 'confirm'])->name('public.rsvp.confirm');

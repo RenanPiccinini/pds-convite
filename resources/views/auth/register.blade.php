@@ -68,7 +68,7 @@
         <div class="pt-4 text-center text-xs text-slate-400">
             Já possui uma conta?
             <a href="{{ route('login') }}" class="text-cyan-400 font-semibold hover:underline ms-1">
-                Acesse aqui
+                Entrar
             </a>
         </div>
     </form>
