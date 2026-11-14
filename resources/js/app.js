@@ -107,11 +107,11 @@ window.showPdsModal = function({
             </div>
             <div class="pt-2 flex items-center justify-center gap-3">
                 ${hasCancel ? `
-                    <button id="pds-modal-cancel" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors border border-slate-700">
+                    <button id="pds-modal-cancel" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-[0.98] text-slate-300 font-semibold text-xs transition-colors border border-slate-700 touch-manipulation cursor-pointer select-none">
                         ${cancelText}
                     </button>
                 ` : ''}
-                <button id="pds-modal-confirm" type="button" class="${hasCancel ? 'flex-1' : 'w-full'} py-3.5 px-6 rounded-xl btn-pds-primary text-white font-bold text-xs tracking-wide shadow-lg">
+                <button id="pds-modal-confirm" type="button" class="${hasCancel ? 'flex-1' : 'w-full'} py-3.5 px-6 rounded-xl btn-pds-primary active:scale-[0.98] text-white font-bold text-xs tracking-wide shadow-lg touch-manipulation cursor-pointer select-none">
                     ${confirmText}
                 </button>
             </div>

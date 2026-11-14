@@ -29,7 +29,7 @@
 
         <div class="relative z-10 min-h-screen flex flex-col justify-center items-center p-3.5 sm:p-6">
             <div class="mb-5 sm:mb-6">
-                <a href="{{ route('home') }}" class="group transition-transform duration-300 hover:scale-105 inline-block">
+                <a href="{{ route('home') }}" class="group transition-transform duration-300 hover:scale-105 inline-block touch-manipulation">
                     <x-application-logo />
                 </a>
             </div>

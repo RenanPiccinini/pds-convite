@@ -6,10 +6,18 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicRsvpController;
 use Illuminate\Support\Facades\Route;
 
-// Public Landing Page
+// Home Redirects to Login
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 })->name('home');
+
+// Optional preview of welcome page
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 
 // Friendly Portuguese Auth Aliases and Redirects
 Route::redirect('/registrar', '/register')->name('registrar');

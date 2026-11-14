@@ -13,10 +13,23 @@ class EventRsvpTest extends TestCase
 
     public function test_can_view_welcome_page(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/welcome');
         $response->assertStatus(200);
         $response->assertSee('PDS');
         $response->assertSee('CONVITE');
+    }
+
+    public function test_home_redirects_to_login_for_guests(): void
+    {
+        $response = $this->get('/');
+        $response->assertRedirect('/login');
+    }
+
+    public function test_home_redirects_to_dashboard_for_authenticated_users(): void
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/');
+        $response->assertRedirect(route('dashboard'));
     }
 
     public function test_user_can_create_event(): void
