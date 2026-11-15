@@ -92,28 +92,6 @@
                     </div>
                 </div>
 
-                <!-- Companions Settings -->
-                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-sm font-bold text-white">Permitir Acompanhantes?</div>
-                            <div class="text-xs text-slate-400">O convidado poderá clicar em "+ Adicionar" e incluir nomes de acompanhantes</div>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="allow_companions" value="1" {{ old('allow_companions', $event->allow_companions) ? 'checked' : '' }} class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500"></div>
-                        </label>
-                    </div>
-
-                    <div>
-                        <label for="max_companions" class="block text-xs font-semibold text-slate-300 mb-1">
-                            Máximo de acompanhantes por convidado
-                        </label>
-                        <input id="max_companions" type="number" name="max_companions" value="{{ old('max_companions', $event->max_companions) }}" min="1" max="50"
-                            class="w-32 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 text-base sm:text-sm" />
-                    </div>
-                </div>
-
                 <!-- Description / Extra details -->
                 <div>
                     <label for="description" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">

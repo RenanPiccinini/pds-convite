@@ -76,7 +76,7 @@
                 </h1>
 
                 <p class="mt-4 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-                    Crie seus eventos, compartilhe o link diretamente no WhatsApp e receba a confirmação dos seus convidados em menos de 10 segundos, com suporte a acompanhantes.
+                    Crie seus eventos, compartilhe o link diretamente no WhatsApp e receba a confirmação dos seus convidados em menos de 10 segundos, com confirmação rápida e segura.
                 </p>
 
                 <!-- CTA Buttons -->
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                     <p class="text-xs text-slate-400 leading-relaxed">
-                                        O convidado não precisa baixar aplicativo e nem criar conta: basta abrir o link, digitar o nome e os acompanhantes!
+                                        O convidado não precisa baixar aplicativo e nem criar conta: basta abrir o link, digitar o nome e confirmar presença!
                                     </p>
                                 </div>
 
@@ -154,10 +154,8 @@
                                         <input type="text" readonly value="Jessica Aleixo" class="w-full text-xs px-3 py-2 bg-slate-100 rounded-xl border border-slate-200 text-slate-900 font-medium" />
                                     </div>
                                     <div>
-                                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Acompanhantes</label>
-                                        <div class="text-xs p-2 rounded-xl bg-purple-50 text-purple-700 font-medium border border-purple-200">
-                                            + Lucas Aleixo
-                                        </div>
+                                        <label class="block text-[11px] font-bold text-slate-600 mb-1">WhatsApp / Celular (opcional)</label>
+                                        <input type="text" readonly value="(51) 99876-5432" class="w-full text-xs px-3 py-2 bg-slate-100 rounded-xl border border-slate-200 text-slate-900 font-medium" />
                                     </div>
                                     <button class="w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs shadow-md">
                                         Confirmar presença
@@ -210,7 +208,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-white">Lista e Exportação Excel</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
-                            Visualize a lista em modo Normal ou por Grupo de Titular + Acompanhantes. Exporte tudo em CSV / Excel para a recepção do evento.
+                            Visualize a lista de confirmados em tempo real. Exporte tudo em CSV / Excel para a recepção do evento.
                         </p>
                     </div>
                 </div>

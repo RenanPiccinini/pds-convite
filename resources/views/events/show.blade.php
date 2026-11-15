@@ -2,10 +2,8 @@
     <div class="space-y-5 sm:space-y-6 pb-28" x-data="{
         addGuestModal: false,
         editGuestModal: false,
-        companionsModal: false,
         whatsappModal: false,
-        selectedGuest: { id: null, name: '', phone: '', companions: [] },
-        newCompanions: [''],
+        selectedGuest: { id: null, name: '', phone: '' },
         copyLink(url) {
             navigator.clipboard.writeText(url);
             window.showPdsModal({
@@ -18,10 +16,6 @@
         openEditGuest(guest) {
             this.selectedGuest = JSON.parse(JSON.stringify(guest));
             this.editGuestModal = true;
-        },
-        openCompanions(guest) {
-            this.selectedGuest = JSON.parse(JSON.stringify(guest));
-            this.companionsModal = true;
         }
     }">
         <!-- Top Navigation (Screenshot 4: < Convidados +) -->
@@ -55,7 +49,7 @@
             </div>
         </div>
 
-        <!-- Top Action Cards (Screenshot 4: Link, Convite nominal, Ver Página, Exportar) -->
+        <!-- Top Action Cards (Screenshot 4: Link, WhatsApp, Ver Página, Exportar) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
             <!-- 1. Link -->
             <button type="button" @click="copyLink('{{ $event->public_url }}')" 
@@ -102,42 +96,18 @@
             </a>
         </div>
 
-        <!-- View Mode Switch & Search / Filter (100% RESPONSIVE) -->
+        <!-- Search / Filter (100% RESPONSIVE) -->
         <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 py-2 border-y border-slate-800/80">
-            <!-- Mode Switch -->
-            <div class="flex items-center justify-between sm:justify-start gap-3">
-                <span class="text-xs text-slate-400 flex items-center gap-1.5 shrink-0">
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                    <span>Lista como:</span>
+            <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400 font-medium">
+                    Total: <strong class="text-white">{{ $totalGuests }}</strong> {{ $totalGuests === 1 ? 'convidado' : 'convidados' }}
                 </span>
-
-                <div class="inline-flex p-1 rounded-xl bg-slate-900 border border-slate-800">
-                    <a href="{{ route('events.show', ['event' => $event, 'view' => 'normal', 'sort' => $sort, 'search' => $search]) }}" 
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all {{ $viewMode !== 'group' ? 'bg-[#18233f] text-cyan-300 shadow border border-cyan-500/30' : 'text-slate-400 hover:text-white' }}">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                        </svg>
-                        <span>Normal</span>
-                    </a>
-
-                    <a href="{{ route('events.show', ['event' => $event, 'view' => 'group', 'sort' => $sort, 'search' => $search]) }}" 
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all {{ $viewMode === 'group' ? 'bg-[#18233f] text-purple-300 shadow border border-purple-500/30' : 'text-slate-400 hover:text-white' }}">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        <span>Grupo</span>
-                    </a>
-                </div>
             </div>
 
             <!-- Search and Filter -->
             <div class="flex items-center gap-2 w-full md:w-auto">
                 <!-- Search Box -->
                 <form method="GET" action="{{ route('events.show', $event) }}" class="relative flex-1 md:w-56">
-                    <input type="hidden" name="view" value="{{ $viewMode }}">
                     <input type="hidden" name="sort" value="{{ $sort }}">
                     <input type="text" name="search" value="{{ $search }}" placeholder="Buscar convidado..." 
                         class="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-cyan-500">
@@ -147,7 +117,7 @@
                 </form>
 
                 <!-- Sort toggle (Data de inscrição vs Nome) -->
-                <a href="{{ route('events.show', ['event' => $event, 'view' => $viewMode, 'sort' => $sort === 'name' ? 'recent' : 'name', 'search' => $search]) }}" 
+                <a href="{{ route('events.show', ['event' => $event, 'sort' => $sort === 'name' ? 'recent' : 'name', 'search' => $search]) }}" 
                     class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 shrink-0" title="Alternar ordenação">
                     <svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -173,135 +143,52 @@
             @else
                 @php $index = 1; @endphp
                 @foreach ($guests as $guest)
-                    @if ($viewMode === 'group')
-                        <!-- GROUP VIEW: Main guest with nested companion cards -->
-                        <div class="glass-panel rounded-2xl p-3.5 sm:p-5 border border-slate-800/80 hover:border-slate-700 transition-all space-y-3">
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                                    <!-- Number Badge (Screenshot 4) -->
-                                    <div class="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 shrink-0">
-                                        {{ $index++ }}
-                                    </div>
-
-                                    <div class="min-w-0 flex-1">
-                                        <div class="text-xs sm:text-sm font-bold text-white flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                            <span class="truncate">{{ $guest->name }}</span>
-                                            <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Titular</span>
-                                        </div>
-                                        <div class="text-[11px] text-slate-400 italic truncate">
-                                            {{ $guest->time_ago }}
-                                            @if($guest->phone) • {{ $guest->phone }} @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 3-dots action menu (Screenshot 5) -->
-                                <div class="relative shrink-0" x-data="{ openMenu: false }">
-                                    <button @click="openMenu = !openMenu" @click.outside="openMenu = false" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800">
-                                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="5" r="2"/>
-                                            <circle cx="12" cy="12" r="2"/>
-                                            <circle cx="12" cy="19" r="2"/>
-                                        </svg>
-                                    </button>
-
-                                    <!-- Dropdown menu items (Screenshot 5) -->
-                                    <div x-show="openMenu" x-cloak class="absolute right-0 mt-1 w-48 rounded-2xl bg-[#0f1738] border border-slate-700 shadow-2xl z-30 py-1.5 text-xs">
-                                        <button type="button" @click="openCompanions({{ json_encode($guest->load('companions')) }}); openMenu = false;" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-400">
-                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                                            <span>Acompanhantes ({{ $guest->companions->count() }})</span>
-                                        </button>
-
-                                        <button type="button" @click="openEditGuest({{ json_encode($guest) }}); openMenu = false;" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-300 hover:bg-slate-800 hover:text-white">
-                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                            <span>Editar</span>
-                                        </button>
-
-                                        <form method="POST" action="{{ route('guests.destroy', $guest) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja remover este convidado da lista?', () => $el.submit(), 'Remover Convidado', 'Sim, Remover')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-rose-400 hover:bg-rose-500/10">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                                <span>Excluir</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="glass-panel rounded-2xl p-3.5 sm:p-5 flex items-center justify-between gap-2 border border-slate-800/80 hover:border-slate-700 transition-all">
+                        <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                            <!-- Number Badge (Screenshot 4) -->
+                            <div class="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 shrink-0">
+                                {{ $index++ }}
                             </div>
 
-                            <!-- Companions list -->
-                            @if ($guest->companions->isNotEmpty())
-                                <div class="pl-9 sm:pl-11 space-y-1.5 pt-1 border-t border-slate-800/60">
-                                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Acompanhantes vinculados:</div>
-                                    <div class="flex flex-wrap gap-1.5">
-                                        @foreach ($guest->companions as $comp)
-                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs">
-                                                <span>{{ $comp->name }}</span>
-                                            </span>
-                                        @endforeach
-                                    </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-xs sm:text-sm font-bold text-white flex flex-wrap items-center gap-1.5">
+                                    <span class="truncate">{{ $guest->name }}</span>
                                 </div>
-                            @endif
+                                <div class="text-[11px] text-slate-400 italic truncate">
+                                    {{ $guest->time_ago }}
+                                    @if($guest->phone) • {{ $guest->phone }} @endif
+                                </div>
+                            </div>
                         </div>
-                    @else
-                        <!-- NORMAL VIEW: Row (Matches Screenshot 4) -->
-                        <div class="glass-panel rounded-2xl p-3.5 sm:p-5 flex items-center justify-between gap-2 border border-slate-800/80 hover:border-slate-700 transition-all">
-                            <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                                <!-- Number Badge (Screenshot 4) -->
-                                <div class="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 shrink-0">
-                                    {{ $index++ }}
-                                </div>
 
-                                <div class="min-w-0 flex-1">
-                                    <div class="text-xs sm:text-sm font-bold text-white flex flex-wrap items-center gap-1.5">
-                                        <span class="truncate">{{ $guest->name }}</span>
-                                        @if ($guest->companions->isNotEmpty())
-                                            <span class="text-[10px] sm:text-[11px] font-normal text-purple-400 shrink-0">
-                                                (+{{ $guest->companions->count() }} {{ $guest->companions->count() == 1 ? 'acomp.' : 'acomps.' }})
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="text-[11px] text-slate-400 italic truncate">
-                                        {{ $guest->time_ago }}
-                                        @if($guest->phone) • {{ $guest->phone }} @endif
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- 3-dots action menu (Screenshot 5) -->
+                        <div class="relative shrink-0" x-data="{ openMenu: false }">
+                            <button @click="openMenu = !openMenu" @click.outside="openMenu = false" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="5" r="2"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <circle cx="12" cy="19" r="2"/>
+                                </svg>
+                            </button>
 
-                            <!-- 3-dots action menu (Screenshot 5) -->
-                            <div class="relative shrink-0" x-data="{ openMenu: false }">
-                                <button @click="openMenu = !openMenu" @click.outside="openMenu = false" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800">
-                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="5" r="2"/>
-                                        <circle cx="12" cy="12" r="2"/>
-                                        <circle cx="12" cy="19" r="2"/>
-                                    </svg>
+                            <!-- Dropdown menu items (Screenshot 5) -->
+                            <div x-show="openMenu" x-cloak class="absolute right-0 mt-1 w-44 rounded-2xl bg-[#0f1738] border border-slate-700 shadow-2xl z-30 py-1.5 text-xs">
+                                <button type="button" @click="openEditGuest({{ json_encode($guest) }}); openMenu = false;" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-300 hover:bg-slate-800 hover:text-white">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    <span>Editar</span>
                                 </button>
 
-                                <!-- Dropdown menu items (Screenshot 5) -->
-                                <div x-show="openMenu" x-cloak class="absolute right-0 mt-1 w-48 rounded-2xl bg-[#0f1738] border border-slate-700 shadow-2xl z-30 py-1.5 text-xs">
-                                    <button type="button" @click="openCompanions({{ json_encode($guest->load('companions')) }}); openMenu = false;" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-400">
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                                        <span>Acompanhantes ({{ $guest->companions->count() }})</span>
+                                <form method="POST" action="{{ route('guests.destroy', $guest) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja remover este convidado da lista?', () => $el.submit(), 'Remover Convidado', 'Sim, Remover')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-rose-400 hover:bg-rose-500/10">
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        <span>Excluir</span>
                                     </button>
-
-                                    <button type="button" @click="openEditGuest({{ json_encode($guest) }}); openMenu = false;" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-300 hover:bg-slate-800 hover:text-white">
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                        <span>Editar</span>
-                                    </button>
-
-                                    <form method="POST" action="{{ route('guests.destroy', $guest) }}" @submit.prevent="window.pdsConfirm('Tem certeza que deseja remover este convidado da lista?', () => $el.submit(), 'Remover Convidado', 'Sim, Remover')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-rose-400 hover:bg-rose-500/10">
-                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                            <span>Excluir</span>
-                                        </button>
-                                    </form>
-                                </div>
+                                </form>
                             </div>
                         </div>
-                    @endif
+                    </div>
                 @endforeach
             @endif
 
@@ -340,7 +227,7 @@
             </div>
         </div>
 
-        <!-- ================= MODALS (WITH MAX-H AND SMOOTH MOBILE SCROLLING) ================= -->
+        <!-- ================= MODALS ================= -->
 
         <!-- 1. Modal Adicionar Convidado Manualmente -->
         <div x-show="addGuestModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
@@ -370,26 +257,6 @@
                             class="w-full px-3.5 sm:px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-base sm:text-sm focus:ring-cyan-500" />
                     </div>
 
-                    <!-- Dynamic Companions -->
-                    <div class="space-y-2 pt-2">
-                        <div class="flex items-center justify-between">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                                Acompanhantes (Opcional)
-                            </label>
-                            <button type="button" @click="newCompanions.push('')" class="text-xs text-cyan-400 hover:underline">
-                                + Adicionar Acompanhante
-                            </button>
-                        </div>
-
-                        <template x-for="(comp, i) in newCompanions" :key="i">
-                            <div class="flex items-center gap-2">
-                                <input type="text" :name="'companions[' + i + ']'" x-model="newCompanions[i]" placeholder="Nome do acompanhante"
-                                    class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white text-base sm:text-xs" />
-                                <button type="button" @click="newCompanions.splice(i, 1)" class="p-2 text-rose-400 hover:bg-rose-500/10 rounded-lg">✕</button>
-                            </div>
-                        </template>
-                    </div>
-
                     <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-800">
                         <button type="button" @click="addGuestModal = false" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800">
                             Cancelar
@@ -402,7 +269,7 @@
             </div>
         </div>
 
-        <!-- 2. Modal Editar Convidado (Screenshot 5: Editar) -->
+        <!-- 2. Modal Editar Convidado -->
         <div x-show="editGuestModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
             <div @click.outside="editGuestModal = false" class="glass-panel w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl p-5 sm:p-8 border border-slate-700 shadow-2xl space-y-4 sm:space-y-5">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4">
@@ -441,48 +308,7 @@
             </div>
         </div>
 
-        <!-- 3. Modal Gerenciar Acompanhantes (Screenshot 5: Acompanhantes) -->
-        <div x-show="companionsModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
-            <div @click.outside="companionsModal = false" class="glass-panel w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl p-5 sm:p-8 border border-purple-500/30 shadow-2xl space-y-4 sm:space-y-5">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4">
-                    <div>
-                        <h3 class="text-base sm:text-lg font-bold text-white">Acompanhantes</h3>
-                        <p class="text-xs text-purple-300 truncate max-w-[240px]" x-text="'Titular: ' + selectedGuest.name"></p>
-                    </div>
-                    <button @click="companionsModal = false" class="text-slate-400 hover:text-white text-lg p-1">✕</button>
-                </div>
-
-                <!-- List of existing companions -->
-                <div class="space-y-2">
-                    <template x-if="!selectedGuest.companions || selectedGuest.companions.length === 0">
-                        <p class="text-xs text-slate-500 text-center py-4">Nenhum acompanhante cadastrado para este titular.</p>
-                    </template>
-
-                    <template x-for="comp in selectedGuest.companions" :key="comp.id">
-                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                            <span class="text-xs font-semibold text-white truncate mr-2" x-text="comp.name"></span>
-                            <form :action="'/companions/' + comp.id" method="POST" @submit.prevent="window.pdsConfirm('Remover este acompanhante?', () => $el.submit(), 'Remover Acompanhante', 'Sim, Remover')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-xs text-rose-400 hover:text-rose-300 p-1">Excluir</button>
-                            </form>
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Add companion form -->
-                <form :action="'/guests/' + selectedGuest.id + '/companions'" method="POST" class="pt-3 border-t border-slate-800 flex items-center gap-2">
-                    @csrf
-                    <input type="text" name="name" required placeholder="Novo acompanhante..."
-                        class="flex-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white text-base sm:text-xs" />
-                    <button type="submit" class="btn-pds-primary px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-white shrink-0">
-                        + Incluir
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- 4. Modal Convite WhatsApp / Nominal -->
+        <!-- 3. Modal Convite WhatsApp / Nominal -->
         <div x-show="whatsappModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
             <div @click.outside="whatsappModal = false" class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl p-5 sm:p-8 border border-emerald-500/30 shadow-2xl space-y-4 sm:space-y-5">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4">

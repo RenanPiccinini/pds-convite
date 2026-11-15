@@ -83,7 +83,7 @@ class EventRsvpTest extends TestCase
         $aliasResponse->assertSee('Confraternização Irigaray 2026');
     }
 
-    public function test_guest_can_confirm_presence_with_companions(): void
+    public function test_guest_can_confirm_presence(): void
     {
         $user = User::factory()->create();
         $event = Event::create([
@@ -93,8 +93,6 @@ class EventRsvpTest extends TestCase
             'event_date' => now()->addDays(5),
             'rsvp_deadline' => now()->addDays(3),
             'location_address' => 'Av. Paulista, 1000',
-            'allow_companions' => true,
-            'max_companions' => 5,
             'status' => 'active',
             'is_unlimited' => true,
         ]);
@@ -102,7 +100,6 @@ class EventRsvpTest extends TestCase
         $response = $this->postJson('/convite/evento-teste/confirmar', [
             'name' => 'Jessica Aleixo',
             'phone' => '(11) 99999-8888',
-            'companions' => ['Lucas Aleixo', 'Camila Aleixo'],
         ]);
 
         $response->assertStatus(200);
@@ -110,20 +107,13 @@ class EventRsvpTest extends TestCase
             'success' => true,
             'guest' => [
                 'name' => 'Jessica Aleixo',
-                'total_party' => 3,
             ],
         ]);
 
         $this->assertDatabaseHas('guests', [
             'event_id' => $event->id,
             'name' => 'Jessica Aleixo',
-        ]);
-
-        $this->assertDatabaseHas('companions', [
-            'name' => 'Lucas Aleixo',
-        ]);
-        $this->assertDatabaseHas('companions', [
-            'name' => 'Camila Aleixo',
+            'phone' => '(11) 99999-8888',
         ]);
     }
 
@@ -137,8 +127,6 @@ class EventRsvpTest extends TestCase
             'event_date' => now()->subDay(),
             'rsvp_deadline' => now()->subDays(2),
             'location_address' => 'Rua Passada, 100',
-            'allow_companions' => true,
-            'max_companions' => 5,
             'status' => 'active',
             'is_unlimited' => true,
         ]);
@@ -169,14 +157,20 @@ class EventRsvpTest extends TestCase
 
         $guest = $event->guests()->create([
             'name' => 'Jessica Aleixo',
+            'phone' => '(11) 99999-8888',
             'confirmed_at' => now(),
         ]);
-
-        $guest->companions()->create(['name' => 'Lucas Aleixo']);
 
         $response = $this->actingAs($user)->get("/events/{$event->id}/export");
 
         $response->assertStatus(200);
         $response->assertHeader('content-type', 'text/csv; charset=UTF-8');
+
+        $streamedContent = $response->streamedContent();
+        $this->assertStringContainsString('Nome,Telefone,"Data de confirmação"', $streamedContent);
+        $this->assertStringContainsString('Jessica Aleixo', $streamedContent);
+        $this->assertStringContainsString('(11) 99999-8888', $streamedContent);
+        $this->assertStringNotContainsString('Tipo', $streamedContent);
+        $this->assertStringNotContainsString('Titular Responsável', $streamedContent);
     }
 }

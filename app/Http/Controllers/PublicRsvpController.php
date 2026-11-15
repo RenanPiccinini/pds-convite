@@ -35,8 +35,6 @@ class PublicRsvpController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
-            'companions' => ['nullable', 'array'],
-            'companions.*' => ['nullable', 'string', 'max:255'],
         ], [
             'name.required' => 'Por favor, informe seu nome completo.',
             'name.min' => 'O nome deve ter no mínimo 3 caracteres.',
@@ -49,21 +47,6 @@ class PublicRsvpController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $companionsCreated = [];
-        if ($event->allow_companions && ! empty($validated['companions'])) {
-            $limit = $event->max_companions > 0 ? $event->max_companions : 50;
-            $count = 0;
-
-            foreach ($validated['companions'] as $compName) {
-                $compName = trim($compName);
-                if (! empty($compName) && $count < $limit) {
-                    $companion = $guest->companions()->create(['name' => $compName]);
-                    $companionsCreated[] = $companion->name;
-                    $count++;
-                }
-            }
-        }
-
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -71,8 +54,7 @@ class PublicRsvpController extends Controller
                 'guest' => [
                     'id' => $guest->id,
                     'name' => $guest->name,
-                    'companions' => $companionsCreated,
-                    'total_party' => 1 + count($companionsCreated),
+                    'phone' => $guest->phone,
                 ],
                 'event' => [
                     'title' => $event->title,
@@ -85,14 +67,14 @@ class PublicRsvpController extends Controller
         }
 
         return redirect()->route('public.rsvp.success', ['slug' => $slug, 'guest' => $guest->id])
-            ->with('confirmed_guest', $guest->load('companions'));
+            ->with('confirmed_guest', $guest);
     }
 
     public function success(string $slug, Request $request)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         $guestId = $request->query('guest');
-        $guest = $guestId ? $event->guests()->with('companions')->find($guestId) : null;
+        $guest = $guestId ? $event->guests()->find($guestId) : null;
 
         return view('public.success', compact('event', 'guest'));
     }

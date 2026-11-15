@@ -20,16 +20,7 @@
 
         @if($guest)
             <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-left text-xs space-y-2">
-                <div><span class="text-slate-400">Titular:</span> <strong class="text-white">{{ $guest->name }}</strong></div>
-                @if($guest->companions->isNotEmpty())
-                    <div><span class="text-slate-400">Acompanhantes:</span>
-                        <div class="flex flex-wrap gap-1 mt-1">
-                            @foreach($guest->companions as $comp)
-                                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">{{ $comp->name }}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+                <div><span class="text-slate-400">Nome:</span> <strong class="text-white">{{ $guest->name }}</strong></div>
                 <div><span class="text-slate-400">Quando:</span> <span class="text-slate-200">{{ $event->formatted_event_date }}</span></div>
                 <div><span class="text-slate-400">Onde:</span> <span class="text-slate-200">{{ $event->location_address }}</span></div>
             </div>

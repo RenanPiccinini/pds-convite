@@ -65,8 +65,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/events/{event}/guests', [GuestController::class, 'store'])->name('guests.store');
     Route::put('/guests/{guest}', [GuestController::class, 'update'])->name('guests.update');
     Route::delete('/guests/{guest}', [GuestController::class, 'destroy'])->name('guests.destroy');
-    Route::post('/guests/{guest}/companions', [GuestController::class, 'addCompanion'])->name('guests.companions.store');
-    Route::delete('/companions/{companion}', [GuestController::class, 'destroyCompanion'])->name('companions.destroy');
 
     // Profile & Settings
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

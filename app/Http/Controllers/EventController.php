@@ -42,8 +42,6 @@ class EventController extends Controller
             'location_name' => ['nullable', 'string', 'max:255'],
             'location_address' => ['required', 'string', 'max:500'],
             'location_map_url' => ['nullable', 'url', 'max:1000'],
-            'allow_companions' => ['nullable', 'boolean'],
-            'max_companions' => ['nullable', 'integer', 'min:0', 'max:50'],
             'whatsapp_message' => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -61,8 +59,8 @@ class EventController extends Controller
             'location_name' => $validated['location_name'] ?? null,
             'location_address' => $validated['location_address'],
             'location_map_url' => $validated['location_map_url'] ?? null,
-            'allow_companions' => $request->has('allow_companions'),
-            'max_companions' => $validated['max_companions'] ?? 10,
+            'allow_companions' => false,
+            'max_companions' => 0,
             'whatsapp_message' => $validated['whatsapp_message'] ?? null,
             'status' => 'active',
             'is_unlimited' => true,
@@ -82,14 +80,12 @@ class EventController extends Controller
         $sort = $request->query('sort', 'recent'); // recent or name
         $search = $request->query('search');
 
-        $guestsQuery = $event->guests()->with('companions');
+        $guestsQuery = $event->guests();
 
         if ($search) {
             $guestsQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhereHas('companions', function ($cq) use ($search) {
-                        $cq->where('name', 'like', "%{$search}%");
-                    });
+                    ->orWhere('phone', 'like', "%{$search}%");
             });
         }
 
@@ -103,10 +99,9 @@ class EventController extends Controller
 
         // Calculate statistics
         $totalGuests = $guests->count();
-        $totalCompanions = $guests->sum(fn ($g) => $g->companions->count());
-        $totalAttendees = $totalGuests + $totalCompanions;
+        $totalAttendees = $totalGuests;
 
-        return view('events.show', compact('event', 'guests', 'viewMode', 'sort', 'search', 'totalGuests', 'totalCompanions', 'totalAttendees'));
+        return view('events.show', compact('event', 'guests', 'viewMode', 'sort', 'search', 'totalGuests', 'totalAttendees'));
     }
 
     public function edit(Event $event)
@@ -132,8 +127,6 @@ class EventController extends Controller
             'location_name' => ['nullable', 'string', 'max:255'],
             'location_address' => ['required', 'string', 'max:500'],
             'location_map_url' => ['nullable', 'url', 'max:1000'],
-            'allow_companions' => ['nullable', 'boolean'],
-            'max_companions' => ['nullable', 'integer', 'min:0', 'max:50'],
             'status' => ['required', 'in:active,closed'],
         ]);
 
@@ -145,8 +138,8 @@ class EventController extends Controller
             'location_name' => $validated['location_name'] ?? null,
             'location_address' => $validated['location_address'],
             'location_map_url' => $validated['location_map_url'] ?? null,
-            'allow_companions' => $request->has('allow_companions'),
-            'max_companions' => $validated['max_companions'] ?? 10,
+            'allow_companions' => false,
+            'max_companions' => 0,
             'status' => $validated['status'],
         ]);
 
@@ -170,7 +163,7 @@ class EventController extends Controller
             abort(403);
         }
 
-        $guests = $event->guests()->with('companions')->orderBy('name', 'asc')->get();
+        $guests = $event->guests()->orderBy('name', 'asc')->get();
         $filename = 'convidados_'.Str::slug($event->title).'_'.date('Y-m-d_H-i').'.csv';
 
         $headers = [
@@ -186,29 +179,14 @@ class EventController extends Controller
             // Add UTF-8 BOM for Microsoft Excel
             fwrite($handle, "\xEF\xBB\xBF");
 
-            fputcsv($handle, ['#', 'Nome Completo', 'Tipo', 'Titular Responsável', 'Telefone', 'Data de Inscrição']);
+            fputcsv($handle, ['Nome', 'Telefone', 'Data de confirmação']);
 
-            $count = 1;
             foreach ($guests as $guest) {
                 fputcsv($handle, [
-                    $count++,
                     $guest->name,
-                    'Titular',
-                    '-',
                     $guest->phone ?? '-',
                     $guest->confirmed_at ? $guest->confirmed_at->format('d/m/Y H:i') : '-',
                 ]);
-
-                foreach ($guest->companions as $companion) {
-                    fputcsv($handle, [
-                        $count++,
-                        $companion->name,
-                        'Acompanhante',
-                        $guest->name,
-                        '-',
-                        $guest->confirmed_at ? $guest->confirmed_at->format('d/m/Y H:i') : '-',
-                    ]);
-                }
             }
 
             fclose($handle);

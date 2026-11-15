@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Confirme sua presença - {{ $event->title }} | PDS Convite</title>
-    <meta name="description" content="Confirmação de presença para o evento {{ $event->title }}. Confirme seu nome e acompanhantes online.">
+    <meta name="description" content="Confirmação de presença para o evento {{ $event->title }}. Confirme seu nome online.">
 
     <!-- OpenGraph meta tags for WhatsApp previews -->
     <meta property="og:title" content="Convite: {{ $event->title }}">
@@ -25,17 +25,6 @@
     x-data="{
         name: '',
         phone: '',
-        companions: [],
-        addCompanion() {
-            if (this.companions.length < {{ $event->max_companions }}) {
-                this.companions.push('');
-            } else {
-                window.pdsAlert('Limite máximo de {{ $event->max_companions }} acompanhantes atingido.', 'Limite Atingido', 'warning');
-            }
-        },
-        removeCompanion(index) {
-            this.companions.splice(index, 1);
-        },
         submitting: false,
         successModal: false,
         confirmedGuest: null,
@@ -100,8 +89,7 @@
                     },
                     body: JSON.stringify({
                         name: this.name.trim(),
-                        phone: this.phone.trim(),
-                        companions: this.companions.filter(c => c && c.trim().length > 0)
+                        phone: this.phone.trim()
                     })
                 });
 
@@ -261,35 +249,6 @@
                                 class="w-full px-4 py-3 rounded-2xl bg-slate-100/90 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-base sm:text-sm transition-all shadow-inner" />
                         </div>
 
-                        <!-- Acompanhantes (Screenshot 1: "+ Adicionar") -->
-                        @if ($event->allow_companions)
-                            <div class="space-y-2">
-                                <label class="block text-xs font-bold text-slate-700">
-                                    Acompanhantes
-                                </label>
-
-                                <!-- Dynamic List of Companion Inputs -->
-                                <div class="space-y-2">
-                                    <template x-for="(companion, index) in companions" :key="index">
-                                        <div class="flex items-center gap-2 animate-fadeIn">
-                                            <input type="text" x-model="companions[index]" placeholder="Nome completo do acompanhante"
-                                                class="flex-1 px-3.5 py-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-900 placeholder-slate-400 text-base sm:text-xs focus:ring-2 focus:ring-cyan-500 focus:bg-white" />
-                                            <button type="button" @click="removeCompanion(index)" class="p-2 text-slate-400 hover:text-rose-500 rounded-full hover:bg-slate-100" title="Remover">
-                                                ✕
-                                            </button>
-                                        </div>
-                                    </template>
-                                </div>
-
-                                <!-- "+ Adicionar" Button (Screenshot 1) -->
-                                <button type="button" @click="addCompanion()" :disabled="isExpired"
-                                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-100 transition-colors">
-                                    <span class="text-base leading-none">⊕</span>
-                                    <span>Adicionar</span>
-                                </button>
-                            </div>
-                        @endif
-
                         <!-- Submit CTA Button (Screenshot 1: "Confirmar presença") -->
                         <div class="pt-2 sm:pt-3">
                             <button type="button" @click="submitRsvp()" :disabled="submitting || isExpired"
@@ -343,19 +302,9 @@
                     <span class="font-bold text-white">{{ $event->title }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <span class="text-slate-400">Titular:</span>
+                    <span class="text-slate-400">Nome:</span>
                     <span class="font-bold text-cyan-400" x-text="confirmedGuest?.name"></span>
                 </div>
-                <template x-if="confirmedGuest?.companions && confirmedGuest.companions.length > 0">
-                    <div class="space-y-1">
-                        <span class="text-slate-400">Acompanhantes:</span>
-                        <div class="flex flex-wrap gap-1.5 pt-1">
-                            <template x-for="c in confirmedGuest.companions" :key="c">
-                                <span class="px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[11px]" x-text="c"></span>
-                            </template>
-                        </div>
-                    </div>
-                </template>
                 <div class="flex items-center justify-between pt-1">
                     <span class="text-slate-400">Data & Hora:</span>
                     <span class="text-slate-200">{{ $event->formatted_event_date }}</span>
