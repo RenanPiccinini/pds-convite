@@ -102,6 +102,10 @@ class EventRsvpTest extends TestCase
         $response->assertSee('Confraternização Irigaray 2026');
         $response->assertSee('Prazo para confirmar');
         $response->assertSee('Confirmar presença');
+        $response->assertSee('logo-irigaray.png');
+        $response->assertSee('pds-logo.png');
+        $response->assertSee('https://piccininidigitalsolutions.com.br/');
+        $response->assertSee('Desenvolvido por');
 
         // Test convide.online alias /pt/{slug}
         $aliasResponse = $this->get('/pt/96c5a861');

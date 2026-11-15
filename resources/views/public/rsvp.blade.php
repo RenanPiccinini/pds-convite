@@ -123,14 +123,27 @@
     </div>
 
     <div class="relative z-10 min-h-screen flex flex-col justify-between py-8 px-4 sm:px-6">
-        <!-- Top Branding / Logo -->
-        <header class="flex justify-center mb-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-2.5 opacity-90 hover:opacity-100 transition-opacity">
-                <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Convite" class="h-8 w-8 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.7)]" />
-                <span class="text-sm font-black tracking-wider text-white font-display">
-                    PDS <span class="text-cyan-400">CONVITE</span>
-                </span>
-            </a>
+        <!-- Top Branding / Logos Header -->
+        <header class="flex justify-center mb-6 sm:mb-8">
+            <div class="inline-flex items-center gap-3.5 sm:gap-5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl sm:rounded-full bg-slate-900/90 backdrop-blur-xl border border-slate-700/70 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+                <!-- Principal: Logo Irigaray -->
+                <div class="flex items-center bg-white/95 px-3 py-1.5 rounded-xl shadow-inner">
+                    <img src="{{ asset('images/logo-irigaray.png') }}" alt="Irigaray" class="h-6 sm:h-7 w-auto object-contain" />
+                </div>
+
+                <!-- Vertical Divider -->
+                <div class="h-6 w-px bg-slate-700"></div>
+
+                <!-- Desenvolvido por: PDS -->
+                <a href="https://piccininidigitalsolutions.com.br/" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center gap-2.5 group transition-all" title="Piccinini Digital Solutions">
+                    <div class="flex flex-col text-right leading-none">
+                        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-medium pb-0.5">Desenvolvido por</span>
+                        <span class="text-xs sm:text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">PDS Solutions</span>
+                    </div>
+                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS Logo" class="h-7 w-7 sm:h-8 sm:w-8 rounded-lg object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.7)] group-hover:scale-105 transition-transform" />
+                </a>
+            </div>
         </header>
 
         <!-- Main Invitation RSVP Container (Matches Screenshot 1 - 100% RESPONSIVE) -->
@@ -273,8 +286,16 @@
         </main>
 
         <!-- Footer -->
-        <footer class="mt-8 text-center text-xs text-slate-500">
-            Tecnologia <span class="text-cyan-400 font-bold">PDS Convite</span> • Piccinini Digital Solutions
+        <footer class="mt-8 text-center text-xs text-slate-500 space-y-2">
+            <div class="flex items-center justify-center gap-2">
+                <span>Evento Oficial</span>
+                <span class="text-slate-600">•</span>
+                <a href="https://piccininidigitalsolutions.com.br/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors">
+                    <span>Desenvolvido por</span>
+                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS" class="h-4 w-4 object-contain inline" />
+                    <span class="font-bold text-cyan-400">Piccinini Digital Solutions</span>
+                </a>
+            </div>
         </footer>
     </div>
 
@@ -324,6 +345,18 @@
                 <button type="button" @click="location.reload()" class="w-full py-3 px-4 rounded-xl btn-pds-primary text-white font-bold text-xs">
                     Concluir
                 </button>
+            </div>
+
+            <!-- Dual Branding in Success Modal -->
+            <div class="pt-2 flex items-center justify-between border-t border-slate-800/80 px-1">
+                <div class="bg-white/95 px-2.5 py-1 rounded-lg shadow-sm">
+                    <img src="{{ asset('images/logo-irigaray.png') }}" alt="Irigaray" class="h-4 w-auto object-contain" />
+                </div>
+                <a href="https://piccininidigitalsolutions.com.br/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors text-[10px]">
+                    <span>Desenvolvido por</span>
+                    <img src="{{ asset('images/pds-logo.png') }}" alt="PDS" class="h-3.5 w-3.5 object-contain" />
+                    <span class="font-bold">PDS Solutions</span>
+                </a>
             </div>
         </div>
     </div>
