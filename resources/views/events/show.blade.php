@@ -49,8 +49,8 @@
             </div>
         </div>
 
-        <!-- Top Action Cards (Screenshot 4: Link, WhatsApp, Ver Página, Exportar) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+        <!-- Top Action Cards (Link, WhatsApp, Exportar) -->
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-4">
             <!-- 1. Link -->
             <button type="button" @click="copyLink('{{ $event->public_url }}')" 
                 class="glass-panel p-3.5 sm:p-4 rounded-2xl flex flex-col items-center justify-center gap-1.5 sm:gap-2 border border-purple-500/30 hover:border-purple-400 transition-all hover:scale-[1.02] active:scale-[0.98] group">
@@ -73,18 +73,7 @@
                 <span class="text-[11px] sm:text-xs font-bold text-slate-200">WhatsApp</span>
             </button>
 
-            <!-- 3. Abrir Convite Público -->
-            <a href="{{ $event->public_url }}" target="_blank" 
-                class="glass-panel p-3.5 sm:p-4 rounded-2xl flex flex-col items-center justify-center gap-1.5 sm:gap-2 border border-emerald-500/30 hover:border-emerald-400 transition-all hover:scale-[1.02] active:scale-[0.98] group">
-                <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-                    <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                </div>
-                <span class="text-[11px] sm:text-xs font-bold text-slate-200">Ver Página</span>
-            </a>
-
-            <!-- 4. Exportar CSV / Excel -->
+            <!-- 3. Exportar CSV / Excel -->
             <a href="{{ route('events.export', $event) }}" 
                 class="glass-panel p-3.5 sm:p-4 rounded-2xl flex flex-col items-center justify-center gap-1.5 sm:gap-2 border border-amber-500/30 hover:border-amber-400 transition-all hover:scale-[1.02] active:scale-[0.98] group">
                 <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:bg-amber-500/20 transition-colors">

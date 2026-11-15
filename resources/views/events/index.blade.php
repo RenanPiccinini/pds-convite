@@ -58,7 +58,8 @@
         @else
             <div class="grid grid-cols-1 gap-3 sm:gap-4">
                 @foreach ($events as $event)
-                    <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 border border-slate-800/80 hover:border-cyan-500/40" data-tilt>
+                    <div onclick="window.location.href='{{ route('events.show', $event) }}'" 
+                        class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 border border-slate-800/80 hover:border-cyan-500/40 cursor-pointer transition-all duration-200 hover:scale-[1.005] hover:shadow-[0_0_25px_rgba(0,240,255,0.15)] group" data-tilt>
                         <div class="space-y-2 flex-1 min-w-0">
                             <div class="flex flex-wrap items-center gap-2">
                                 <a href="{{ route('events.show', $event) }}" class="text-base sm:text-xl font-bold text-white hover:text-cyan-400 transition-colors truncate max-w-full">
@@ -66,7 +67,7 @@
                                 </a>
                                 @if (!$event->isRsvpOpen())
                                     <span class="text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 shrink-0">
-                                        RSVP Encerrado
+                                        Prazo encerrado
                                     </span>
                                 @else
                                     <span class="text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">
@@ -112,7 +113,7 @@
                                 </svg>
                             </a>
 
-                            <div class="relative shrink-0">
+                            <div class="relative shrink-0" onclick="event.stopPropagation()">
                                 <button @click="open = !open" @click.outside="open = false" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
                                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                                         <circle cx="12" cy="5" r="2"/>

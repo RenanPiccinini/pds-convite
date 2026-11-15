@@ -55,6 +55,32 @@ class EventRsvpTest extends TestCase
         $response->assertRedirect(route('events.show', $event));
     }
 
+    public function test_events_index_shows_prazo_encerrado_when_deadline_passed_and_no_feedback_buttons(): void
+    {
+        $user = User::factory()->create();
+        $expiredEvent = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-expirado-list',
+            'title' => 'Evento Expirado Lista',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->subDay(),
+            'location_address' => 'Rua Passada, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        $response = $this->actingAs($user)->get('/events');
+        $response->assertStatus(200);
+        $response->assertSee('Prazo encerrado');
+        $response->assertDontSee('RSVP Encerrado');
+        $response->assertDontSee('Enviar feedback');
+        $response->assertDontSee('Central de ajuda');
+
+        $showResponse = $this->actingAs($user)->get(route('events.show', $expiredEvent));
+        $showResponse->assertStatus(200);
+        $showResponse->assertDontSee('Ver Página');
+    }
+
     public function test_can_view_public_rsvp_page(): void
     {
         $user = User::factory()->create();

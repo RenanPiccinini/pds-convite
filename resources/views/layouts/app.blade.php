@@ -68,22 +68,6 @@
                         </form>
                     </nav>
                 </div>
-
-                <!-- Bottom Links (Screenshots 3, 4: Enviar feedback, Central de ajuda) -->
-                <div class="pt-6 border-t border-slate-800/60 space-y-2">
-                    <a href="https://wa.me/?text=Feedback%20sobre%20o%20PDS%20Convite" target="_blank" class="flex items-center gap-2.5 text-xs text-slate-500 hover:text-slate-300 transition-colors">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span>Enviar feedback</span>
-                    </a>
-                    <a href="https://wa.me/?text=Ajuda%20com%20o%20PDS%20Convite" target="_blank" class="flex items-center gap-2.5 text-xs text-slate-500 hover:text-slate-300 transition-colors">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        <span>Central de ajuda</span>
-                    </a>
-                </div>
             </aside>
 
             <!-- Mobile Drawer Backdrop -->
@@ -144,22 +128,6 @@
                             </button>
                         </form>
                     </nav>
-                </div>
-
-                <!-- Bottom Links on Mobile (Enviar feedback, Central de ajuda) -->
-                <div class="pt-5 border-t border-slate-800 space-y-2">
-                    <a href="https://wa.me/?text=Feedback%20sobre%20o%20PDS%20Convite" target="_blank" class="flex items-center gap-2.5 text-xs text-slate-400 hover:text-white transition-colors py-1">
-                        <svg class="h-4 w-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span>Enviar feedback</span>
-                    </a>
-                    <a href="https://wa.me/?text=Ajuda%20com%20o%20PDS%20Convite" target="_blank" class="flex items-center gap-2.5 text-xs text-slate-400 hover:text-white transition-colors py-1">
-                        <svg class="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        <span>Central de ajuda</span>
-                    </a>
                 </div>
             </aside>
 
