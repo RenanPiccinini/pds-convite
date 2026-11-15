@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Services\EvolutionApiService;
 use Illuminate\Http\Request;
 
 class PublicRsvpController extends Controller
 {
+    protected EvolutionApiService $evolutionService;
+
+    public function __construct(EvolutionApiService $evolutionService)
+    {
+        $this->evolutionService = $evolutionService;
+    }
+
     public function show(string $slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
@@ -46,6 +54,31 @@ class PublicRsvpController extends Controller
             'confirmed_at' => now(),
             'ip_address' => $request->ip(),
         ]);
+
+        // Disparar mensagem no WhatsApp pelo número conectado pelo organizador do evento
+        if (! empty($guest->phone) && $event->user && $event->user->isWhatsAppConnected()) {
+            try {
+                $message = "Olá, *{$guest->name}*! 🎉\n\n"
+                    . "Sua presença no evento *{$event->title}* foi confirmada com sucesso!\n\n"
+                    . "📅 *Data & Hora:* {$event->formatted_event_date}\n"
+                    . "📍 *Local:* {$event->location_address}\n";
+
+                if (! empty($event->map_url)) {
+                    $message .= "🗺 *Localização:* {$event->map_url}\n";
+                }
+
+                $message .= "\nAgradecemos sua confirmação e esperamos você lá!";
+
+                $this->evolutionService->sendTextMessage(
+                    $event->user->whatsapp_instance,
+                    $guest->phone,
+                    $message
+                );
+            } catch (\Throwable $e) {
+                // Falha silenciosa para não impedir a confirmação do convidado
+                \Illuminate\Support\Facades\Log::warning("Erro ao enviar confirmação WhatsApp: " . $e->getMessage());
+            }
+        }
 
         if ($request->wantsJson()) {
             return response()->json([

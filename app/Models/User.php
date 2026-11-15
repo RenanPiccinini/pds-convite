@@ -23,6 +23,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'whatsapp_instance',
+        'whatsapp_status',
+        'whatsapp_phone',
+        'whatsapp_connected_at',
     ];
 
     /**
@@ -44,8 +48,24 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'whatsapp_connected_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isWhatsAppConnected(): bool
+    {
+        return $this->whatsapp_status === 'connected' && !empty($this->whatsapp_instance);
+    }
+
+    public function getOrCreateWhatsAppInstanceName(): string
+    {
+        if (! $this->whatsapp_instance) {
+            $this->whatsapp_instance = 'pds_user_' . $this->id;
+            $this->save();
+        }
+
+        return $this->whatsapp_instance;
     }
 
     public function events(): HasMany

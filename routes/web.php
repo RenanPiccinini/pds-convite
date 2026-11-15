@@ -4,6 +4,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicRsvpController;
+use App\Http\Controllers\WhatsAppConnectionController;
 use Illuminate\Support\Facades\Route;
 
 // Home Redirects to Login
@@ -65,6 +66,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/events/{event}/guests', [GuestController::class, 'store'])->name('guests.store');
     Route::put('/guests/{guest}', [GuestController::class, 'update'])->name('guests.update');
     Route::delete('/guests/{guest}', [GuestController::class, 'destroy'])->name('guests.destroy');
+
+    // WhatsApp Connection Management (Evolution API)
+    Route::get('/whatsapp', [WhatsAppConnectionController::class, 'index'])->name('whatsapp.index');
+    Route::get('/whatsapp/qrcode', [WhatsAppConnectionController::class, 'getQrCode'])->name('whatsapp.qrcode');
+    Route::get('/whatsapp/status', [WhatsAppConnectionController::class, 'status'])->name('whatsapp.status');
+    Route::post('/whatsapp/disconnect', [WhatsAppConnectionController::class, 'disconnect'])->name('whatsapp.disconnect');
 
     // Profile & Settings
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

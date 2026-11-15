@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'evolution' => [
+        'url' => rtrim(env('EVOLUTION_API_URL', 'https://evolution.piccininidigitalsolutions.com.br'), '/'),
+        'api_key' => env('EVOLUTION_API_KEY', ''),
+    ],
+
 ];
