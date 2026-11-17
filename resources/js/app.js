@@ -210,6 +210,33 @@ window.alert = function(msg) {
     });
 };
 
+// ================= BRAZILIAN PHONE MASK HELPER =================
+window.formatPhone = function(value) {
+    if (!value) return '';
+    let digits = String(value).replace(/\D/g, '');
+    if (digits.startsWith('55') && digits.length >= 12) {
+        digits = digits.slice(2);
+    }
+    digits = digits.slice(0, 11);
+
+    if (digits.length === 0) return '';
+    if (digits.length <= 2) return `(${digits}`;
+    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+};
+
+// Global delegation for phone inputs
+document.addEventListener('input', (e) => {
+    const el = e.target;
+    if (el && (el.matches('input[data-phone-mask], input[name="phone"]') || el.getAttribute('x-model')?.includes('phone') || el.getAttribute('placeholder')?.includes('(00)'))) {
+        const formatted = window.formatPhone(el.value);
+        if (el.value !== formatted) {
+            el.value = formatted;
+        }
+    }
+});
+
 // 3D Parallax & Tilt Effect
 document.addEventListener('DOMContentLoaded', () => {
     // Parallax mouse movement on background

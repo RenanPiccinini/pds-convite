@@ -268,7 +268,13 @@
                                 <span>WhatsApp / Celular</span>
                                 <span class="text-slate-400 text-[10px] font-normal">(opcional)</span>
                             </label>
-                            <input type="text" x-model="phone" placeholder="(00) 00000-0000" :disabled="isExpired"
+                            <input type="tel" 
+                                x-model="phone" 
+                                @input="phone = window.formatPhone($event.target.value)"
+                                placeholder="(00) 00000-0000" 
+                                maxlength="15"
+                                inputmode="numeric"
+                                :disabled="isExpired"
                                 class="w-full px-4 py-3 rounded-2xl bg-slate-100/90 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white text-base sm:text-sm transition-all shadow-inner" />
                         </div>
 

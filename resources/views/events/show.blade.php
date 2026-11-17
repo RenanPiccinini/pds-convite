@@ -242,7 +242,8 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                             Telefone / WhatsApp (Opcional)
                         </label>
-                        <input type="text" name="phone" placeholder="(00) 00000-0000"
+                        <input type="tel" name="phone" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"
+                            @input="$el.value = window.formatPhone($el.value)"
                             class="w-full px-3.5 sm:px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-base sm:text-sm focus:ring-cyan-500" />
                     </div>
 
@@ -281,7 +282,8 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                             Telefone / WhatsApp
                         </label>
-                        <input type="text" name="phone" x-model="selectedGuest.phone"
+                        <input type="tel" name="phone" x-model="selectedGuest.phone" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"
+                            @input="selectedGuest.phone = window.formatPhone($event.target.value)"
                             class="w-full px-3.5 sm:px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-base sm:text-sm" />
                     </div>
 
