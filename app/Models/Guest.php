@@ -47,4 +47,29 @@ class Guest extends Model
     {
         return $this->confirmed_at ? $this->confirmed_at->locale('pt_BR')->diffForHumans() : '';
     }
+
+    public static function normalizeName(?string $name): string
+    {
+        if (empty($name)) {
+            return '';
+        }
+
+        $clean = preg_replace('/\s+/', ' ', trim($name));
+        return mb_strtolower($clean, 'UTF-8');
+    }
+
+    public static function normalizePhone(?string $phone): ?string
+    {
+        if (empty($phone)) {
+            return null;
+        }
+
+        $digits = preg_replace('/\D/', '', $phone);
+
+        if (str_starts_with($digits, '55') && strlen($digits) >= 12) {
+            $digits = substr($digits, 2);
+        }
+
+        return $digits ?: null;
+    }
 }

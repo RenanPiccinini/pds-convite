@@ -163,4 +163,56 @@ class Event extends Model
             .'&details='.urlencode("Confirmação de presença via PDS Convite: {$this->public_url}")
             .'&location='.urlencode($this->location_address);
     }
+
+    public function findDuplicateGuest(string $name, ?string $phone = null, ?int $ignoreGuestId = null): ?array
+    {
+        $normalizedName = Guest::normalizeName($name);
+        $normalizedPhone = Guest::normalizePhone($phone);
+
+        $query = $this->guests();
+        if ($ignoreGuestId) {
+            $query->where('id', '!=', $ignoreGuestId);
+        }
+
+        $existingGuests = $query->get(['id', 'name', 'phone']);
+
+        $duplicateByName = null;
+        $duplicateByPhone = null;
+
+        foreach ($existingGuests as $existing) {
+            if ($normalizedName !== '' && Guest::normalizeName($existing->name) === $normalizedName) {
+                $duplicateByName = $existing;
+            }
+
+            if ($normalizedPhone && Guest::normalizePhone($existing->phone) === $normalizedPhone) {
+                $duplicateByPhone = $existing;
+            }
+        }
+
+        if ($duplicateByName && $duplicateByPhone) {
+            return [
+                'type' => 'both',
+                'message' => 'Você já confirmou sua presença neste evento!',
+                'guest' => $duplicateByName,
+            ];
+        }
+
+        if ($duplicateByName) {
+            return [
+                'type' => 'name',
+                'message' => 'Já existe uma confirmação de presença com este nome completo neste evento.',
+                'guest' => $duplicateByName,
+            ];
+        }
+
+        if ($duplicateByPhone) {
+            return [
+                'type' => 'phone',
+                'message' => 'Já existe uma confirmação de presença com este número de telefone neste evento.',
+                'guest' => $duplicateByPhone,
+            ];
+        }
+
+        return null;
+    }
 }

@@ -159,6 +159,16 @@
                 <div class="w-16 h-0.5 mx-auto bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
             </div>
 
+            @if (session('error'))
+                <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center justify-between shadow-sm animate-fadeIn">
+                    <div class="flex items-center gap-2">
+                        <span>⚠️</span>
+                        <span class="font-semibold">{{ session('error') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
+                </div>
+            @endif
+
             <!-- RSVP White/Glass Card (Screenshot 1) -->
             <div class="bg-white/95 text-slate-800 rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6),0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl border border-white/40 transform-style-3d relative" data-tilt>
                 <div class="space-y-5 sm:space-y-6">

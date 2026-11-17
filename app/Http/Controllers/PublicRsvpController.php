@@ -48,6 +48,18 @@ class PublicRsvpController extends Controller
             'name.min' => 'O nome deve ter no mínimo 3 caracteres.',
         ]);
 
+        // Validação: não permitir que a mesma pessoa confirme presença duas vezes no mesmo evento
+        if ($duplicate = $event->findDuplicateGuest($validated['name'], $validated['phone'] ?? null)) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $duplicate['message'],
+                ], 422);
+            }
+
+            return redirect()->back()->withInput()->with('error', $duplicate['message']);
+        }
+
         $guest = $event->guests()->create([
             'name' => trim($validated['name']),
             'phone' => $validated['phone'] ?? null,

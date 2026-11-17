@@ -203,4 +203,181 @@ class EventRsvpTest extends TestCase
         $this->assertStringNotContainsString('Tipo', $streamedContent);
         $this->assertStringNotContainsString('Titular Responsável', $streamedContent);
     }
+
+    public function test_guest_cannot_confirm_twice_in_same_event_with_same_name(): void
+    {
+        $user = User::factory()->create();
+        $event = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-duplicidade',
+            'title' => 'Evento Teste Duplicidade',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->addDays(3),
+            'location_address' => 'Rua Teste, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        // Primeira confirmação: sucesso
+        $first = $this->postJson('/convite/evento-duplicidade/confirmar', [
+            'name' => 'Renan Piccinini',
+            'phone' => '(51) 99999-1111',
+        ]);
+        $first->assertStatus(200);
+        $first->assertJson(['success' => true]);
+
+        // Segunda confirmação com o mesmo nome no mesmo evento: bloqueada!
+        $second = $this->postJson('/convite/evento-duplicidade/confirmar', [
+            'name' => 'Renan Piccinini',
+            'phone' => '(51) 98888-2222',
+        ]);
+        $second->assertStatus(422);
+        $second->assertJson([
+            'success' => false,
+        ]);
+        $this->assertStringContainsString('Já existe uma confirmação de presença com este nome completo neste evento', $second->json('message'));
+
+        $this->assertEquals(1, $event->guests()->count());
+    }
+
+    public function test_guest_cannot_confirm_twice_in_same_event_with_same_phone(): void
+    {
+        $user = User::factory()->create();
+        $event = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-duplicidade-telefone',
+            'title' => 'Evento Teste Duplicidade Telefone',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->addDays(3),
+            'location_address' => 'Rua Teste, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        // Primeira confirmação
+        $first = $this->postJson('/convite/evento-duplicidade-telefone/confirmar', [
+            'name' => 'Jessica Aleixo',
+            'phone' => '(51) 99876-5432',
+        ]);
+        $first->assertStatus(200);
+
+        // Segunda confirmação com nome diferente mas mesmo telefone: bloqueada!
+        $second = $this->postJson('/convite/evento-duplicidade-telefone/confirmar', [
+            'name' => 'Outra Pessoa',
+            'phone' => '51998765432',
+        ]);
+        $second->assertStatus(422);
+        $second->assertJson([
+            'success' => false,
+        ]);
+        $this->assertStringContainsString('Já existe uma confirmação de presença com este número de telefone neste evento', $second->json('message'));
+
+        $this->assertEquals(1, $event->guests()->count());
+    }
+
+    public function test_guest_cannot_confirm_twice_with_differently_formatted_phone_or_casing(): void
+    {
+        $user = User::factory()->create();
+        $event = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-formatos',
+            'title' => 'Evento Formatos',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->addDays(3),
+            'location_address' => 'Rua Teste, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        $this->postJson('/convite/evento-formatos/confirmar', [
+            'name' => 'Mariana Albuquerque',
+            'phone' => '+55 (51) 99123-4567',
+        ])->assertStatus(200);
+
+        // Tentativa com letras minúsculas e espaços extras no nome e telefone só números
+        $retry = $this->postJson('/convite/evento-formatos/confirmar', [
+            'name' => '  mariana albuquerque ',
+            'phone' => '51991234567',
+        ]);
+        $retry->assertStatus(422);
+        $retry->assertJson(['success' => false]);
+
+        $this->assertEquals(1, $event->guests()->count());
+    }
+
+    public function test_same_guest_can_confirm_in_different_events(): void
+    {
+        $user = User::factory()->create();
+
+        $eventA = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-a',
+            'title' => 'Evento A',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->addDays(3),
+            'location_address' => 'Rua A, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        $eventB = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-b',
+            'title' => 'Evento B',
+            'event_date' => now()->addDays(10),
+            'rsvp_deadline' => now()->addDays(8),
+            'location_address' => 'Rua B, 200',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        // Confirmação no Evento A
+        $resA = $this->postJson('/convite/evento-a/confirmar', [
+            'name' => 'Renan Piccinini',
+            'phone' => '(51) 99999-8888',
+        ]);
+        $resA->assertStatus(200);
+        $resA->assertJson(['success' => true]);
+
+        // Confirmação da MESMA pessoa com MESMO telefone no Evento B: permitido!
+        $resB = $this->postJson('/convite/evento-b/confirmar', [
+            'name' => 'Renan Piccinini',
+            'phone' => '(51) 99999-8888',
+        ]);
+        $resB->assertStatus(200);
+        $resB->assertJson(['success' => true]);
+
+        $this->assertEquals(1, $eventA->guests()->count());
+        $this->assertEquals(1, $eventB->guests()->count());
+    }
+
+    public function test_organizer_cannot_manually_add_duplicate_guest_in_same_event(): void
+    {
+        $user = User::factory()->create();
+        $event = Event::create([
+            'user_id' => $user->id,
+            'slug' => 'evento-manual',
+            'title' => 'Evento Manual',
+            'event_date' => now()->addDays(5),
+            'rsvp_deadline' => now()->addDays(3),
+            'location_address' => 'Rua Teste, 100',
+            'status' => 'active',
+            'is_unlimited' => true,
+        ]);
+
+        $event->guests()->create([
+            'name' => 'Carlos Silva',
+            'phone' => '(51) 99999-0000',
+            'confirmed_at' => now(),
+        ]);
+
+        // Tentativa manual de adicionar com mesmo nome
+        $response = $this->actingAs($user)->post("/events/{$event->id}/guests", [
+            'name' => 'Carlos Silva',
+            'phone' => '(51) 98888-0000',
+        ]);
+
+        $response->assertSessionHas('error');
+        $this->assertEquals(1, $event->guests()->count());
+    }
 }

@@ -20,6 +20,10 @@ class GuestController extends Controller
             'phone' => ['nullable', 'string', 'max:50'],
         ]);
 
+        if ($duplicate = $event->findDuplicateGuest($validated['name'], $validated['phone'] ?? null)) {
+            return redirect()->back()->withInput()->with('error', $duplicate['message']);
+        }
+
         $guest = $event->guests()->create([
             'name' => trim($validated['name']),
             'phone' => $validated['phone'] ?? null,
@@ -40,6 +44,10 @@ class GuestController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
         ]);
+
+        if ($duplicate = $guest->event->findDuplicateGuest($validated['name'], $validated['phone'] ?? null, $guest->id)) {
+            return redirect()->back()->withInput()->with('error', $duplicate['message']);
+        }
 
         $guest->update([
             'name' => trim($validated['name']),
